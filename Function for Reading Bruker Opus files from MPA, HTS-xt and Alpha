@@ -1,12 +1,10 @@
-# Spectra
-Spectra code
- # 'Author: Andrew Sila
+    # 'Author: Andrew Sila
     # 'Email: a.sila@cgiar.org
     # 'Organization: World Agroforestry Centre - ICRAF
     # 'Purpose: Function for reading Bruker OPUS files from MPA, HTS-xt and Alpha
     # 'Date: 3/November/2016
     # 'Version: Beta
-    # Adopted by W. Simbila 2017
+    # Edited by W. Simbila 2017
     
     is.installed<-function(anypkg){
       is.element(anypkg, installed.packages()[,1])
