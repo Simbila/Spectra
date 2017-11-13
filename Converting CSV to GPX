@@ -1,0 +1,23 @@
+    # Converting csv file to GPX
+    # W. Simbila November 2017
+
+    # Write file -------------------------------------------------------------
+    # Generate grid/ GPS waypoint ID'S
+    
+    df <- read.table("TZA_sample.csv", header = T, sep = ",")
+    
+    # Assign column names
+    x<- df$Lat
+    y<- df$Lon
+    a<-c(1:4403)
+    xy<-data.frame(x,y,a)
+    
+    #Set working directory to save the flat table to be created after conversions
+    
+    setwd("~/TZ_sample")
+    
+    latslongs <- SpatialPointsDataFrame(coords=xy[,c(1,2)],data=xy,proj4string =CRS("+proj=laea +ellps=WGS84 +lon_0=20 +lat_0=5 +units=m +no_defs")) 
+    
+    writeOGR(latslongs, dsn="/Users/macbookpro/TZ_sampleT",
+             dataset_options="GPX_USE_EXTENSIONS=yes",layer="waypoints",driver="GPX", overwrite_layer = T)
+
