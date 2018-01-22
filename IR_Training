@@ -1,0 +1,108 @@
+ # Learning how to input data into  AfSIS 2018
+  # create plot, fertilizer and pH variables
+  plot <- c(1:10)
+  fert <- rep(c("N","K"), 5)
+  pH <- c(5:14)
+  # Different tratment replication  
+  fert2 <- c(rep("N",5), rep("K",5))
+  
+  # combine plot, fert and pH into a table of 3 column 
+  soil <- cbind(plot, fert, pH) 
+  
+  # Save generated table as CSV files
+  write.table(soil, "Soil.CSV", sep = ",", row.names = FALSE)
+  
+  # Loading/Importing csv file into R --------------------------------------------------------------
+  soil <- read.csv("Soil.CSV")
+  
+  # Manipulating data using Subsetting --------------------------------------------------------------
+  soil[,2] # getting second column
+  soil[2,] # getting second row
+  soil[1:3,] # getting first three row of the soil table
+  soil[c(1,6,9),] # getting row 1, 6, 9 from the soil table
+  soil[-c(3,7),] # exclude row 3 and 7 
+  names(soil) # getting column names
+  
+  # Attaching Data into the environment -------------------------------------------------------------
+  attach(soil)
+  plot(plot, pH)
+  
+  dim(soil) # getting the number of rows an column of the tabl
+  
+  # To rename columns to "ID", "Treatment", "pH"
+  colnames(soil) <- c("ID", "treatment", "pH")
+  soil$pH
+  soil[1:5,] # subsetting row 1 to 5
+  soil[,1:2] # subsetting column 1 and 2
+  
+  soil[5,3] # get value for column 3 and row 5
+  
+  # Subsetting using Logical evaluation----------------------------------------------------
+  soil$fert =="N"  # getting only row with N
+  n <- soil[soil$fert=="N",]
+  
+  soil$fert=="K"
+  k <- soil[soil$fert=="K",] # getting only row with K
+  
+  # Plotting our Data ----------------------------------------------------------------------
+  plot(soil$plot, soil$pH)
+  
+  # Linking data from two tables -----------------------------------------------------------
+  # Maize yield Table
+  # Hint 
+  
+  plot <- c(1:10)
+  fert <- rep(c("N","K"), 5)
+  yeild <- c(2:11)
+  plant <- cbind(plot, fert, yeild)
+  
+  # write a csv file --------------------------------------
+  
+  write.table(plant, "plant.CSV", sep = ",", row.names = FALSE)
+  
+  # Reading file(s) in R
+  plant <- read.csv("plant.CSV")
+  
+  # Merging files -------------------------------------------
+  
+  plantsoil <- merge(soil,plant, by="plot")
+  
+  # write csv file
+  
+  write.table(plantsoil, "dffinal.csv", sep = ",", row.names = FALSE)
+  
+  dcombine <- read.csv("dffinal.csv")
+  
+  colnames(dcombine) <- c("ID", "fert.soil", "pH", "fert.plant", "pH")
+  
+  # Dropping using Index 
+  dcombine[,-3] # dropping column
+  dcombine[,-c(2,4)] # dropping more thhan one column in a dataframe
+  
+  # Dropping column by names
+  omit <- c("plot", "pH")
+  tomit <- which(colnames(dcombine) %in% omit)
+  dcombine[,-tomit]
+  
+  # Summary ------------------------------------------------------------------------
+  summary(dcombine)
+  
+  mean(dcombine$pH) # mean
+  
+  min(dcombine$pH)  # min
+  
+  max(dcombine$pH)  # max
+  
+  sd(dcombine$pH)   # standard deviation
+  
+  # Forcing R to pass s into the 
+  dcombine$ID <- paste0("s", dcombine$ID)
+  
+  # How to load install a package into R ------------------------------------------
+  library(dplyr)
+  
+  install.packages(c("caret", "soil.spec", "reshape2", "shiny", "shinyfiles"))
+
+  
+  
+  
